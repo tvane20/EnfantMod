@@ -1,0 +1,90 @@
+﻿@model EnfantMod.Models.EnfantModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card mt-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="text-center">Détails de l'Enfant @Html.DisplayFor(model => model.LastName)</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.TutorName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TutorName)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.CIN)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.CIN)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Phone)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Adress)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Adress)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Province)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Province)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.DateAdded)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DateAdded)
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer text-center">
+            @Html.ActionLink("Retour à la liste", "Index", null, new { @class = "btn btn-secondary mx-2" })
+        </div>
+    </div>
+</div>

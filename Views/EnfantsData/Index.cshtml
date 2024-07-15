@@ -1,0 +1,230 @@
+﻿<!--another code-->
+@model List<EnfantMod.Models.EnfantModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<!-- Tableau des enfants -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3 clearfix">
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#createModal">
+            Ajouter un Enfant
+        </button>
+
+        <h6 class="m-0 font-weight-bold text-primary float-left">Liste des Enfants</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().LastName)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TutorName)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CIN)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Phone)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Adress)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Province)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().City)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().DateAdded)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.TutorName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CIN)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Adress)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Province)</td>
+                            <td>@Html.DisplayFor(modelItem => item.City)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateAdded)</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @Html.ActionLink("Editer", "Edit", new { id = item.Id }, new { @class = "dropdown-item", data_toggle = "modal", data_target = "#editModal" })
+                                        @Html.ActionLink("Afficher", "Details", new { id = item.Id }, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Supprimer", "Delete", new { id = item.Id }, new { @class = "dropdown-item", data_toggle = "modal", data_target = "#deleteModal" })
+
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+
+<!-- Modals pour détails, ajout, modification et suppression -->
+<div id="detailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog  modal-lg">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="createModal" class="modal fade" role="dialog">
+    <div class="modal-dialog  modal-lg">
+
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog  modal-lg">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier un dossier d'enfant</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm ">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "Aucune donnée disponible dans le tableau",
+                    "info": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+                    "infoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
+                    "infoFiltered": "(filtré à partir de _MAX_ éléments au total)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Afficher _MENU_ éléments",
+                    "loadingRecords": "Chargement...",
+                    "processing": "Traitement...",
+                    "search": "Rechercher :",
+                    "zeroRecords": "Aucun élément correspondant trouvé",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "next": "Suivant",
+                        "previous": "Précédent"
+                    }
+                }
+            });
+
+            // Chargement des modals avec les détails, ajouter, modifier, supprimer
+            $('#detailsModal').on('show.bs.modal', function (e) {
+                var link = $(e.relatedTarget);
+                $(this).find('.modal-content').load(link.attr('href'));
+            });
+
+            $('#createModal').on('show.bs.modal', function (e) {
+                $(this).find('.modal-content').load('@Url.Action("Create")');
+            });
+
+            $('#editModal').on('show.bs.modal', function (e) {
+                var link = $(e.relatedTarget);
+                $(this).find('.modal-content').load(link.attr('href'));
+            });
+
+            $('#deleteModal').on('show.bs.modal', function (e) {
+                var link = $(e.relatedTarget);
+                $(this).find('.modal-content').load(link.attr('href'));
+            });
+
+
+            $(document).on('submit', '#createForm', function (e) {
+                e.preventDefault();
+
+                var $form = $(this);
+                var url = $form.attr('action');
+                var method = $form.attr('method');
+                var data = $form.serialize();
+
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: data,
+                    success: function (response) {
+                        if ($(response).find(".text-danger").length > 0) {
+                            // Replace the content of the modal with the new form (with validation messages)
+                            $('#createModal .modal-content').html(response);
+                        } else {
+                            // Close the modal
+                            $('#createModal').modal('hide');
+                            // Optionally, you can reload the table or do something else
+                            window.location.href = response.redirectUrl;
+                        }
+                    }
+                });
+            });
+
+            $(document).on('submit', '#editForm', function (e) {
+                e.preventDefault();
+
+                var $form = $(this);
+                var url = $form.attr('action');
+                var method = $form.attr('method');
+                var data = $form.serialize();
+
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: data,
+                    success: function (response) {
+                        if ($(response).find(".text-danger").length > 0) {
+                            // Remplacer le contenu du modal par le nouveau formulaire avec les messages de validation
+                            $('#editModal .modal-content').html(response);
+                        } else {
+                            // Fermer le modal
+                            $('#editModal').modal('hide');
+                            // Optionnel : recharger la table ou faire une autre action appropriée
+                            window.location.href = response.redirectUrl;
+                        }
+                    }
+                });
+            });
+            
+
+        });
+    </script>
+}
+
